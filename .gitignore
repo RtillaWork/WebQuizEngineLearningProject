@@ -1,0 +1,5 @@
+# Project exclude paths
+/.gradle/
+/Web Quiz Engine/task/build/
+/Web Quiz Engine/task/out/production/classes/
+/Web Quiz Engine/task/out/test/classes/
