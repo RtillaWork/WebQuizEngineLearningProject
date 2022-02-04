@@ -4,6 +4,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.Set;
 
 @Entity
 public class User {
@@ -26,12 +27,23 @@ public class User {
     @Transient
     private String password;
 
+    @ElementCollection
+    private Set<Quiz> quizzes;
+
     public User() {
     }
 
     public User(String email, String password) {
         this.email = email;
+        this.username = email;
         this.password = password;
+    }
+
+    public User(String email, String password, Set<Quiz> quizzes) {
+        this.email = email;
+        this.username = email;
+        this.password = password;
+        this.quizzes = quizzes;
     }
 
     public Long getId() {
