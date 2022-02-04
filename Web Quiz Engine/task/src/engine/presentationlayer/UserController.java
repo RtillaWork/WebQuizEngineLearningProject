@@ -1,6 +1,6 @@
 package engine.presentationlayer;
 
-import engine.businesslayer.User;
+import engine.businesslayer.UserEntity;
 import engine.security.service.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,8 +22,8 @@ public class UserController {
     UserRepository userRepository;
 
     @PostMapping(API_REGISTER_USER)
-    public ResponseEntity<User> registerUser(@Valid @RequestBody User user) {
-        User newUser = userRepository.save(user);
+    public ResponseEntity<UserEntity> registerUser(@Valid @RequestBody UserEntity user) {
+        UserEntity newUser = userRepository.save(user);
         if (newUser != null) {
             return new ResponseEntity<>(newUser, HttpStatus.OK);
         } else {

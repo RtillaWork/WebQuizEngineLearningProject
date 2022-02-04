@@ -1,27 +1,21 @@
 package engine.presentationlayer;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import engine.businesslayer.User;
-
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
+import engine.businesslayer.UserEntity;
 
 public class UserMarshalling {
 
     private static final ObjectMapper objectMapper = new ObjectMapper();
     private long id;
-    private User user;
+    private UserEntity user;
 
-    public UserMarshalling(User user, long id) {
+    public UserMarshalling(UserEntity user, long id) {
         this.user = user;
         this.id = id;
     }
 
-    public static String toJson(User user, long id) throws JsonProcessingException {
+    public static String toJson(UserEntity user, long id) throws JsonProcessingException {
         engine.presentationlayer.UserMarshalling userJsonMarshalling = new engine.presentationlayer
                 .UserMarshalling(user, id);
         return objectMapper.writeValueAsString(userJsonMarshalling);

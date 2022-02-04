@@ -1,13 +1,11 @@
 package engine.security.service;
 
-import engine.businesslayer.User;
+import engine.businesslayer.UserEntity;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
-
 @Repository
-public interface UserRepository extends CrudRepository<User, Long> {
+public interface UserRepository extends CrudRepository<UserEntity, Long> {
 //    Optional<UserLoginInfo> findByEmail(String email);
 //    User save(UserService user);
 //    Optional<User> findById(Long aLong);
@@ -16,5 +14,5 @@ public interface UserRepository extends CrudRepository<User, Long> {
 
 
     @Override
-    <S extends User> S save(S entity);
+    <S extends UserEntity> S save(S entity);
 }

@@ -30,6 +30,10 @@ public class Quiz {
     @ElementCollection
     private Set<Integer> answer; // = new HashSet<>(Collections.emptySet());
 
+    @ManyToOne
+    @JoinColumn(name = "quiz_author_id", nullable = true)
+    private UserEntity quizAuthor;
+
     public Quiz() {
         this.title = new String();
         this.text = new String();

@@ -7,7 +7,7 @@ import javax.validation.constraints.Size;
 import java.util.Set;
 
 @Entity
-public class User {
+public class UserEntity {
     final static int MINIMUM_PASSWORD_LENGTH = 5;
 
     @Id
@@ -27,19 +27,19 @@ public class User {
     @Transient
     private String password;
 
-    @ElementCollection
+    @OneToMany(mappedBy = "quizAuthor")
     private Set<Quiz> quizzes;
 
-    public User() {
+    public UserEntity() {
     }
 
-    public User(String email, String password) {
+    public UserEntity(String email, String password) {
         this.email = email;
         this.username = email;
         this.password = password;
     }
 
-    public User(String email, String password, Set<Quiz> quizzes) {
+    public UserEntity(String email, String password, Set<Quiz> quizzes) {
         this.email = email;
         this.username = email;
         this.password = password;
