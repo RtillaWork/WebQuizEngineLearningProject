@@ -58,16 +58,18 @@ public class UserRepositoryService {
         }
     }
 
-    public UserEntity save(UserEntity user) throws Exception {
+    public UserEntity save(UserEntity user) {
         if (isUsernameValid(user)) {
             userRepository.save(user);
             return user;
-        } else if (makeUsernameValid(user)) {
+        } else {
+            makeUsernameValid(user);
             userRepository.save(user);
             return user;
-        } else {
-            throw new Exception("Error saving UserEntity: makeUsernameValid(...) failed");
         }
+//        else {
+//            throw new Exception("Error saving UserEntity: makeUsernameValid(...) failed");
+//        }
     }
 
 }
