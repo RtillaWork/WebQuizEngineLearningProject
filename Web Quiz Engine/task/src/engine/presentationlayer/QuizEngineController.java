@@ -70,5 +70,10 @@ public class QuizEngineController {
 
     }
 
+    @DeleteMapping(API_DELETE_QUIZ)
+    public void deleteQuiz(@PathVariable Long id) {
+        return;
+    }
+
 
 }

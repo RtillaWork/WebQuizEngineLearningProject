@@ -1,15 +1,17 @@
-package engine.security.service;
+package engine.persistencelayer;
 
 import engine.businesslayer.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import javax.validation.ConstraintViolationException;
 import java.util.Optional;
 
 @Service
-public class UserRepositoryService {
+public class UserEntityRepositoryService {
     @Autowired
-    UserRepository userRepository;
+    UserEntityRepository userEntityRepository;
 
 
     public Optional<UserEntity> findByEmail(String email) {
@@ -24,16 +26,12 @@ public class UserRepositoryService {
         return user;
     }
 
-    public static boolean isUsernameValid(UserEntity user) {
+    private static boolean isUsernameValid(UserEntity user) {
         if ((user.getUsername() == null || user.getUsername().isEmpty()) && user.getEmail() != null) {
             return false;
         } else {
             return true;
         }
-    }
-
-    public Optional<UserEntity> findById(Long id) {
-        return userRepository.findById(id);
     }
 
     public boolean existsById(Long id) {
@@ -44,12 +42,7 @@ public class UserRepositoryService {
         return findByEmail(email).isPresent();
     }
 
-    public Iterable<UserEntity> findAll() {
-        return userRepository.findAll();
-
-    }
-
-    public static boolean makeUsernameValid(UserEntity user) {
+    private static boolean makeUsernameValid(UserEntity user) {
         if (isUsernameValid(user)) {
             return false;
         } else {
@@ -58,14 +51,24 @@ public class UserRepositoryService {
         }
     }
 
+    public Optional<UserEntity> findById(Long id) {
+        return userEntityRepository.findById(id);
+    }
+
+    public Iterable<UserEntity> findAll() {
+        return userEntityRepository.findAll();
+
+    }
+
     public UserEntity save(UserEntity user) {
-        if (isUsernameValid(user)) {
-            userRepository.save(user);
-            return user;
-        } else {
+        if (!isUsernameValid(user)) {
             makeUsernameValid(user);
-            userRepository.save(user);
-            return user;
+        }
+        try {
+            return userEntityRepository.save(user);
+
+        } catch (DataIntegrityViolationException e) {
+            return null;
         }
 //        else {
 //            throw new Exception("Error saving UserEntity: makeUsernameValid(...) failed");

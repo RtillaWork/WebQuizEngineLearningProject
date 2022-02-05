@@ -1,12 +1,11 @@
-package engine.security.service;
+package engine.persistencelayer;
 
 import engine.businesslayer.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UserRepository extends JpaRepository<UserEntity, Long> {
+public interface UserEntityRepository extends JpaRepository<UserEntity, Long> {
 //    Optional<UserLoginInfo> findByEmail(String email);
 //    User save(UserService user);
 //    Optional<User> findById(Long aLong);

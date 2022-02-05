@@ -1,8 +1,7 @@
 package engine.presentationlayer;
 
 import engine.businesslayer.UserEntity;
-import engine.security.service.UserRepository;
-import engine.security.service.UserRepositoryService;
+import engine.persistencelayer.UserEntityRepositoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,14 +16,14 @@ import static engine.ApiConfig.API_REGISTER_USER;
 
 @RestController
 @Validated
-public class UserController {
+public class UserEntityController {
 
     @Autowired
-    UserRepositoryService userRepositoryService;
+    UserEntityRepositoryService userEntityRepositoryService;
 
     @PostMapping(API_REGISTER_USER)
     public ResponseEntity<UserEntity> registerUser(@Valid @RequestBody UserEntity user) {
-        UserEntity newUser = userRepositoryService.save(user);
+        UserEntity newUser = userEntityRepositoryService.save(user);
         if (newUser != null) {
             return new ResponseEntity<>(newUser, HttpStatus.OK);
         } else {

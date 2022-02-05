@@ -48,7 +48,7 @@ public class QuizMarshalling {
         return quiz.getOptions();
     }
 
-    //    @JsonIgnore
+//    @JsonIgnore
     public Set<Integer> getAnswer() {
         return quiz.getAnswer();
     }

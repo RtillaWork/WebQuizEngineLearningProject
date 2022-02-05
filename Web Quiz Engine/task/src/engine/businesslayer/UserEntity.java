@@ -1,12 +1,17 @@
 package engine.businesslayer;
 
+import org.hibernate.validator.constraints.UniqueElements;
+
 import javax.persistence.*;
+import javax.transaction.Transactional;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.Set;
 
 @Entity
+@Transactional
 public class UserEntity {
     final static int MINIMUM_PASSWORD_LENGTH = 5;
 
@@ -16,15 +21,21 @@ public class UserEntity {
 
     @NotBlank
     @Email
+    @Pattern(regexp = ".+@.+\\..+")
+//    @Column(unique = true)
     private String email;
 
     @Email
+//    @Pattern(regexp=".+@.+\\..+")
+    @Column(unique = true)
     private String username;
 
     @NotBlank
     @Size(min = MINIMUM_PASSWORD_LENGTH)
-    @Transient
+//    @Transient
     private String password;
+
+    private String role;
 
     @OneToMany(mappedBy = "quizAuthor")
     private Set<Quiz> quizzes;
@@ -38,6 +49,13 @@ public class UserEntity {
         this.email = email;
         this.username = email;
         this.password = password;
+    }
+
+    public UserEntity(String email, String password, String role) {
+        this.email = email;
+        this.username = email;
+        this.password = password;
+        this.role = role;
     }
 
     public UserEntity(String email, String password, Set<Quiz> quizzes) {
