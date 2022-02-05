@@ -112,4 +112,13 @@ public class Quiz {
 //                : answer == null ?  new HashSet<>(Collections.emptySet())
 //                : new HashSet<>(Collections.emptySet()));
 //    }
+
+
+    public UserEntity getQuizAuthor() {
+        return quizAuthor;
+    }
+
+    public void setQuizAuthor(UserEntity quizAuthor) {
+        this.quizAuthor = quizAuthor;
+    }
 }

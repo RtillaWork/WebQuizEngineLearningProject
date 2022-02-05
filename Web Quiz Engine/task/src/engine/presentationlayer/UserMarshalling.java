@@ -2,7 +2,10 @@ package engine.presentationlayer;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import engine.businesslayer.Quiz;
 import engine.businesslayer.UserEntity;
+
+import java.util.Set;
 
 public class UserMarshalling {
 
@@ -53,4 +56,7 @@ public class UserMarshalling {
         return user.getUsername();
     }
 
+    public Set<Quiz> getQuizzes() {
+        return user.getQuizzes();
+    }
 }

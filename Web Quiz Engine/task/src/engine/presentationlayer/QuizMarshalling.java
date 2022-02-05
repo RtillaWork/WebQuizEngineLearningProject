@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import engine.businesslayer.Quiz;
+import engine.businesslayer.UserEntity;
 
 import java.util.List;
 import java.util.Map;
@@ -47,11 +48,15 @@ public class QuizMarshalling {
         return quiz.getOptions();
     }
 
-//    @JsonIgnore
+    //    @JsonIgnore
     public Set<Integer> getAnswer() {
         return quiz.getAnswer();
     }
 
+    //    @JsonIgnore
+    public UserEntity getQuizAuthor() {
+        return quiz.getQuizAuthor();
+    }
 //    public static String toJson(List<Quiz> quizMap) throws JsonProcessingException {
 //        List<QuizMarshalling> quizJsonList = quizMap
 //                .keySet().stream().map(i -> new QuizMarshalling(quizMap.get(i), i)).collect(Collectors.toList());

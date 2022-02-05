@@ -18,7 +18,6 @@ public class UserEntity {
     @Email
     private String email;
 
-    @NotBlank
     @Email
     private String username;
 
@@ -31,6 +30,8 @@ public class UserEntity {
     private Set<Quiz> quizzes;
 
     public UserEntity() {
+        this.username = "";
+        this.quizzes = Set.of();
     }
 
     public UserEntity(String email, String password) {
@@ -76,5 +77,13 @@ public class UserEntity {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Set<Quiz> getQuizzes() {
+        return quizzes;
+    }
+
+    public void setQuizzes(Set<Quiz> quizzes) {
+        this.quizzes = quizzes;
     }
 }
