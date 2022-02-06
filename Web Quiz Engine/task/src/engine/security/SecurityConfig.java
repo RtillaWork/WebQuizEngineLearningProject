@@ -55,7 +55,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
 //                .anyRequest().permitAll()
                 .antMatchers(HttpMethod.POST, "/actuator/shutdown/**").permitAll()
-                .mvcMatchers(API_ROOT_PATH + "/h2-console/**").permitAll()
+//                .mvcMatchers(API_ROOT_PATH + "/h2-console/**").permitAll()
                 .antMatchers(HttpMethod.POST, API_REGISTER_USER + "/**").permitAll()
                 .antMatchers(API_ROOT_PATH + "/**").authenticated()
 //                .antMatchers(API_ROOT_PATH + "/**").authenticated()
