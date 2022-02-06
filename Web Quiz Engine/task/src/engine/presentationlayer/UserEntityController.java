@@ -1,6 +1,6 @@
 package engine.presentationlayer;
 
-import engine.businesslayer.UserEntity;
+import engine.security.UserEntity;
 import engine.persistencelayer.UserEntityRepositoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

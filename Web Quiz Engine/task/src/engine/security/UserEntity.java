@@ -1,6 +1,10 @@
-package engine.businesslayer;
+package engine.security;
 
+import engine.businesslayer.Quiz;
+import engine.security.RegisteredUserAuthorities;
 import org.hibernate.validator.constraints.UniqueElements;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.transaction.Transactional;
@@ -8,11 +12,13 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 //@Transactional
-public class UserEntity {
+public class UserEntity implements UserDetails {
     final static int MINIMUM_PASSWORD_LENGTH = 5;
 
     @Id
@@ -35,7 +41,7 @@ public class UserEntity {
 //    @Transient
     private String password;
 
-    private String roles;
+    private String roles = "REGISTERED_USER";
 
     @OneToMany(mappedBy = "quizAuthor", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<Quiz> quizzes;
@@ -97,11 +103,75 @@ public class UserEntity {
         this.password = password;
     }
 
+    public String getRoles() {
+        return roles;
+    }
+
+    public void setRoles(String roles) {
+        this.roles = roles;
+    }
+
     public Set<Quiz> getQuizzes() {
         return quizzes;
     }
 
     public void setQuizzes(Set<Quiz> quizzes) {
         this.quizzes = quizzes;
+    }
+
+    /**
+     * Returns the authorities granted to the user. Cannot return <code>null</code>.
+     *
+     * @return the authorities, sorted by natural key (never <code>null</code>)
+     */
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return Set.of(new RegisteredUserAuthorities(this));
+    }
+
+    /**
+     * Indicates whether the user's account has expired. An expired account cannot be
+     * authenticated.
+     *
+     * @return <code>true</code> if the user's account is valid (ie non-expired),
+     * <code>false</code> if no longer valid (ie expired)
+     */
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    /**
+     * Indicates whether the user is locked or unlocked. A locked user cannot be
+     * authenticated.
+     *
+     * @return <code>true</code> if the user is not locked, <code>false</code> otherwise
+     */
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    /**
+     * Indicates whether the user's credentials (password) has expired. Expired
+     * credentials prevent authentication.
+     *
+     * @return <code>true</code> if the user's credentials are valid (ie non-expired),
+     * <code>false</code> if no longer valid (ie expired)
+     */
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    /**
+     * Indicates whether the user is enabled or disabled. A disabled user cannot be
+     * authenticated.
+     *
+     * @return <code>true</code> if the user is enabled, <code>false</code> otherwise
+     */
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }

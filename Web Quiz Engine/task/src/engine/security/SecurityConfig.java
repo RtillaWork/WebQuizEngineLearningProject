@@ -1,5 +1,6 @@
 package engine.security;
 
+import engine.persistencelayer.UserEntityRepositoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -15,36 +16,18 @@ import static engine.ApiConfig.API_ROOT_PATH;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-//
-//    @Autowired
-//    PasswordEncoder passwordEncoder;
 
-//    @Override
-//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.inMemoryAuthentication()
-//                .withUser("u0")
-//                .password(passwordEncoder.encode("up0"))
-//                .roles()
-//                .and()
-//                .withUser("u1")
-//                .password(passwordEncoder.encode("up1"))
-//                .roles("REGISTERED_USER")
-//                .and()
-//                .withUser("u3")
-//                .password(passwordEncoder.encode("up3"))
-//                .roles("REGISTERED_USER")
-//                .and()
-//                .withUser("u2")
-//                .password(passwordEncoder.encode("up2"))
-//                .roles("REGISTERED_USER", "QUIZ_AUTHOR")
-//                .and()
-//                .withUser("u4")
-//                .password(passwordEncoder.encode("up4"))
-//                .roles("REGISTERED_USER", "QUIZ_AUTHOR")
-//                .and()
-//                .passwordEncoder(passwordEncoder);
-//
-//    }
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
+    @Autowired
+    UserEntityRepositoryService userEntityRepositoryService;
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userEntityRepositoryService).passwordEncoder(passwordEncoder);
+
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {

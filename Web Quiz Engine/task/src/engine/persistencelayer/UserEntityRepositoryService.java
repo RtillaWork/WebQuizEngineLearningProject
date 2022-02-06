@@ -1,29 +1,44 @@
 package engine.persistencelayer;
 
-import engine.businesslayer.UserEntity;
+import engine.security.PasswordEncoderImpl;
+import engine.security.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import javax.validation.ConstraintViolationException;
+import java.util.Collection;
 import java.util.Optional;
 
 @Service
-public class UserEntityRepositoryService {
+public class UserEntityRepositoryService implements UserDetailsService {
     @Autowired
     UserEntityRepository userEntityRepository;
 
+    @Autowired
+    PasswordEncoderImpl passwordEncoder;
+
+
+//    public Optional<UserEntity> findByEmail(String email) {
+//        var user = Optional.ofNullable(new UserEntity());
+//        for (var u : findAll()) {
+//            if (u.getEmail().equals(email)) {
+//                user = Optional.of(u);
+//                break;
+//            }
+//        }
+//        return user;
+//    }
 
     public Optional<UserEntity> findByEmail(String email) {
-        var user = Optional.ofNullable(new UserEntity());
-        for (var u : findAll()) {
-            if (u.getEmail().equals(email)) {
-                user = Optional.of(u);
-                break;
-            }
-        }
+        return userEntityRepository.findByEmail(email);
+    }
 
-        return user;
+    public Optional<UserEntity> findByUsername(String username) {
+        return findByEmail(username);
     }
 
     private static boolean isUsernameValid(UserEntity user) {
@@ -65,6 +80,7 @@ public class UserEntityRepositoryService {
             makeUsernameValid(user);
         }
         try {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
             return userEntityRepository.save(user);
 
         } catch (DataIntegrityViolationException e) {
@@ -75,4 +91,22 @@ public class UserEntityRepositoryService {
 //        }
     }
 
+    /**
+     * Locates the user based on the username. In the actual implementation, the search
+     * may possibly be case sensitive, or case insensitive depending on how the
+     * implementation instance is configured. In this case, the <code>UserDetails</code>
+     * object that comes back may have a username that is of a different case than what
+     * was actually requested..
+     *
+     * @param username the username identifying the user whose data is required.
+     * @return a fully populated user record (never <code>null</code>)
+     * @throws UsernameNotFoundException if the user could not be found or the user has no
+     *                                   GrantedAuthority
+     */
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        UserEntity user = findByEmail(username)
+                .orElseThrow();
+        return user;
+    }
 }

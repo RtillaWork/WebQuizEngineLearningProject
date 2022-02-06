@@ -1,8 +1,7 @@
 package engine.persistencelayer;
 
 import engine.businesslayer.Quiz;
-import engine.businesslayer.UserEntity;
-import engine.persistencelayer.QuizRepository;
+import engine.security.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
