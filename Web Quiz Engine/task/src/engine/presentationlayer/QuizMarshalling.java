@@ -57,6 +57,7 @@ public class QuizMarshalling {
 public Long getQuizAuthorId() {
     return quiz.getQuizAuthor().getId();
 }
+
 //    public static String toJson(List<Quiz> quizMap) throws JsonProcessingException {
 //        List<QuizMarshalling> quizJsonList = quizMap
 //                .keySet().stream().map(i -> new QuizMarshalling(quizMap.get(i), i)).collect(Collectors.toList());

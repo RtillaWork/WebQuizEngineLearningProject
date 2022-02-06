@@ -57,7 +57,7 @@ public class UserMarshalling {
         return user.getUsername();
     }
 
-    @JsonIgnore
+//    @JsonIgnore
     public Set<Quiz> getQuizzes() {
         return user.getQuizzes();
     }
