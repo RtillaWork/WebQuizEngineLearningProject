@@ -28,14 +28,17 @@ public class QuizEngineController {
 //    private ConcurrentHashMap<Long, Quiz> quizMap = new ConcurrentHashMap<>();
 
     @PostMapping(API_ADD_QUIZ)
-    public String createQuiz(@RequestBody @Valid Quiz quiz) throws JsonProcessingException {
+    public ResponseEntity<String> createQuiz(@RequestBody @Valid Quiz quiz) throws JsonProcessingException {
         // NOTE Keys are a set, do not repeat, simplistic next id is current size starting with 0
 
         quiz = quizService.save(quiz);
-
-        long id = quiz.getId(); // Math.max(quizMap.size(), 0);
+        if (quiz != null) {
+            long id = quiz.getId(); // Math.max(quizMap.size(), 0);
 //        quizMap.put(id, quiz);
-        return QuizMarshalling.toJson(quiz, id);
+            return new ResponseEntity<>(QuizMarshalling.toJson(quiz, id), HttpStatus.OK);
+        } else {
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PostMapping(API_SOLVE_QUIZ)

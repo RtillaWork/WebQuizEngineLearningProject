@@ -11,7 +11,7 @@ import javax.validation.constraints.Size;
 import java.util.Set;
 
 @Entity
-@Transactional
+//@Transactional
 public class UserEntity {
     final static int MINIMUM_PASSWORD_LENGTH = 5;
 
@@ -35,9 +35,9 @@ public class UserEntity {
 //    @Transient
     private String password;
 
-    private String role;
+    private String roles;
 
-    @OneToMany(mappedBy = "quizAuthor")
+    @OneToMany(mappedBy = "quizAuthor", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<Quiz> quizzes;
 
     public UserEntity() {
@@ -51,11 +51,11 @@ public class UserEntity {
         this.password = password;
     }
 
-    public UserEntity(String email, String password, String role) {
+    public UserEntity(String email, String password, String roles) {
         this.email = email;
         this.username = email;
         this.password = password;
-        this.role = role;
+        this.roles = roles;
     }
 
     public UserEntity(String email, String password, Set<Quiz> quizzes) {

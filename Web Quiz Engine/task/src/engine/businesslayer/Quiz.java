@@ -1,12 +1,14 @@
 package engine.businesslayer;
 
 import javax.persistence.*;
+import javax.transaction.Transactional;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.*;
 
 @Entity
+//@Transactional
 public class Quiz {
 
     @Id

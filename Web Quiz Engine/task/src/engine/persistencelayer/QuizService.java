@@ -1,8 +1,10 @@
 package engine.persistencelayer;
 
 import engine.businesslayer.Quiz;
+import engine.businesslayer.UserEntity;
 import engine.persistencelayer.QuizRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -11,7 +13,11 @@ import java.util.concurrent.ConcurrentHashMap;
 @Service
 public class QuizService {
     @Autowired
-    public QuizRepository quizRepository;
+    private QuizRepository quizRepository;
+
+    @Autowired
+    private UserEntityRepositoryService uers;
+
     //    private QuizRepository quizService = new QuizService();
     Map<Long, Quiz> quizMap = new ConcurrentHashMap<>(Collections.emptyMap());
 
@@ -35,7 +41,15 @@ public class QuizService {
     }
 
     public Quiz save(Quiz quiz) {
-        return quizRepository.save(quiz);
+        try {
+            UserEntity user = uers.findById(quiz.getQuizAuthor().getId()).orElseThrow();
+            quiz.setQuizAuthor(user);
+            return quizRepository.save(quiz);
+        } catch (DataIntegrityViolationException d) {
+            return null;
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     public Optional<Quiz> findById(long id) {
