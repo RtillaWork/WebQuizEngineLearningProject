@@ -14,7 +14,6 @@ public interface UserEntityRepository extends JpaRepository<UserEntity, Long> {
 //    boolean existsById(Long aLong);
 //    Iterable<User> findAll();
 
-
     @Override
     <S extends UserEntity> S save(S entity);
 

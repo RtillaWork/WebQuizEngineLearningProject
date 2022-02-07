@@ -17,7 +17,6 @@ public class QuizService {
     @Autowired
     private UserEntityRepositoryService uers;
 
-    //    private QuizRepository quizService = new QuizService();
     Map<Long, Quiz> quizMap = new ConcurrentHashMap<>(Collections.emptyMap());
 
     public QuizService() {
@@ -70,6 +69,12 @@ public class QuizService {
             return null;
         } catch (Exception e) {
             return null;
+        }
+    }
+
+    public void delete(Quiz quiz, UserEntity author) {
+        if (quiz.getQuizAuthor().equals(author)) {
+            quizRepository.delete(quiz);
         }
     }
 }

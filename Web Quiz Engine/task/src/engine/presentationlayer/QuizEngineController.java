@@ -4,6 +4,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import engine.businesslayer.QuizGrader;
 import engine.persistencelayer.QuizService;
 import engine.businesslayer.Quiz;
+import engine.persistencelayer.UserEntityRepositoryService;
+import engine.security.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +30,10 @@ public class QuizEngineController {
 
     @Autowired
     private QuizService quizService;
+
+    @Autowired
+    private UserEntityRepositoryService uers;
+
 //    private ConcurrentHashMap<Long, Quiz> quizMap = new ConcurrentHashMap<>();
 
     @PostMapping(API_ADD_QUIZ)
@@ -77,9 +83,19 @@ public class QuizEngineController {
     }
 
     @DeleteMapping(API_DELETE_QUIZ)
-    public void deleteQuiz(@PathVariable Long id) {
-        return;
+    public ResponseEntity<String> deleteQuiz(@PathVariable Long id, Principal principal) {
+        Quiz quiz = quizService.findById(id).orElse(null);
+        if (quiz == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        UserEntity author = uers.findByUsername(principal.getName()).orElse(null);
+        if (!quiz.getQuizAuthor().equals(author)) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        } else {
+            quizService.delete(quiz, author);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
+        }
     }
-
-
 }

@@ -48,12 +48,12 @@ public class QuizMarshalling {
         return quiz.getOptions();
     }
 
-    //    @JsonIgnore
+    @JsonIgnore
     public Set<Integer> getAnswer() {
         return quiz.getAnswer();
     }
 
-    //    @JsonIgnore
+    @JsonIgnore
     public Long getQuizAuthorId() {
         return quiz.getQuizAuthor().getId();
     }
