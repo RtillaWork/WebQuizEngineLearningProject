@@ -1,6 +1,6 @@
 package engine.persistencelayer;
 
-import engine.security.PasswordEncoderImpl;
+//import engine.security.PasswordEncoderImpl;
 import engine.security.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -8,6 +8,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -19,7 +20,7 @@ public class UserEntityRepositoryService implements UserDetailsService {
     UserEntityRepository userEntityRepository;
 
     @Autowired
-    PasswordEncoderImpl passwordEncoder;
+    PasswordEncoder passwordEncoder;
 
 
 //    public Optional<UserEntity> findByEmail(String email) {

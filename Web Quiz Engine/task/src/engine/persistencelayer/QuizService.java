@@ -60,4 +60,16 @@ public class QuizService {
         quizRepository.findAll().forEach(quiz -> quizMap.put(quiz.getId(), quiz));
         return quizMap;
     }
+
+    public Quiz save(Quiz quiz, String username) {
+        try {
+            UserEntity user = uers.findByUsername(username).orElseThrow();
+            quiz.setQuizAuthor(user);
+            return quizRepository.save(quiz);
+        } catch (DataIntegrityViolationException d) {
+            return null;
+        } catch (Exception e) {
+            return null;
+        }
+    }
 }

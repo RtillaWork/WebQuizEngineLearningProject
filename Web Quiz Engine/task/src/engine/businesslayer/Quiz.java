@@ -1,5 +1,7 @@
 package engine.businesslayer;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import engine.security.UserEntity;
 
 import javax.persistence.*;
@@ -35,6 +37,8 @@ public class Quiz {
 
     @ManyToOne
     @JoinColumn(name = "quiz_author_id", nullable = true)
+//    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private UserEntity quizAuthor;
 
     public Quiz() {

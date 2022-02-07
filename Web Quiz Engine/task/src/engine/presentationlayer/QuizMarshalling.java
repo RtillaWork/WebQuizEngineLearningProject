@@ -1,6 +1,7 @@
 package engine.presentationlayer;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import engine.businesslayer.Quiz;
@@ -47,12 +48,12 @@ public class QuizMarshalling {
         return quiz.getOptions();
     }
 
-    @JsonIgnore
+    //    @JsonIgnore
     public Set<Integer> getAnswer() {
         return quiz.getAnswer();
     }
 
-    @JsonIgnore
+    //    @JsonIgnore
     public Long getQuizAuthorId() {
         return quiz.getQuizAuthor().getId();
     }

@@ -7,11 +7,14 @@ import engine.businesslayer.Quiz;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.AuthenticatedPrincipal;
+import org.springframework.security.core.Authentication;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import java.security.Principal;
 import java.util.Optional;
 
 import static engine.ApiConfig.*;
@@ -28,10 +31,10 @@ public class QuizEngineController {
 //    private ConcurrentHashMap<Long, Quiz> quizMap = new ConcurrentHashMap<>();
 
     @PostMapping(API_ADD_QUIZ)
-    public ResponseEntity<String> createQuiz(@RequestBody @Valid Quiz quiz) throws JsonProcessingException {
+    public ResponseEntity<String> createQuiz(@RequestBody @Valid Quiz quiz, Principal principal)
+            throws JsonProcessingException {
         // NOTE Keys are a set, do not repeat, simplistic next id is current size starting with 0
-
-        quiz = quizService.save(quiz);
+        quiz = quizService.save(quiz, principal.getName());
         if (quiz != null) {
             long id = quiz.getId(); // Math.max(quizMap.size(), 0);
 //        quizMap.put(id, quiz);
