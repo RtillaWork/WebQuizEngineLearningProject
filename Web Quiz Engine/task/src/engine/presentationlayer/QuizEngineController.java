@@ -75,11 +75,17 @@ public class QuizEngineController {
         }
     }
 
-    @GetMapping(API_GET_QUIZZES)
-    public ResponseEntity<String> getQuiz() throws JsonProcessingException {
-        var quizzes = quizService.asMapFindAll();
-        return new ResponseEntity<String>(QuizMarshalling.toJson(quizzes), HttpStatus.OK);
+//    @GetMapping(API_GET_QUIZZES)
+//    public ResponseEntity<String> getQuizzes() throws JsonProcessingException {
+//        var quizzes = quizService.asMapFindAll();
+//        return new ResponseEntity<String>(QuizMarshalling.toJson(quizzes), HttpStatus.OK);
+//    }
 
+    @GetMapping(API_GET_QUIZZES_WITH_PAGING)
+    public ResponseEntity<String> getQuizzesWithPaging(@RequestParam(defaultValue = "0") int startingPage)
+            throws JsonProcessingException {
+        var quizzes = quizService.findAllQuizzes(startingPage, API_MAX_PAGE_SIZE_QUIZZES);
+        return new ResponseEntity<String>(QuizMarshalling.toJson(quizzes), HttpStatus.OK);
     }
 
     @DeleteMapping(API_DELETE_QUIZ)

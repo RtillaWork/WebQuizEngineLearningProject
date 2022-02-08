@@ -4,6 +4,9 @@ import engine.businesslayer.Quiz;
 import engine.security.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -57,6 +60,22 @@ public class QuizService {
     public Map<Long, Quiz> asMapFindAll() {
         Map<Long, Quiz> quizMap = new HashMap<>();
         quizRepository.findAll().forEach(quiz -> quizMap.put(quiz.getId(), quiz));
+        return quizMap;
+    }
+
+    public Map<Long, Quiz> findAllQuizzes() {
+        return toMapFromList(quizRepository.findAll());
+    }
+
+    public Map<Long, Quiz> findAllQuizzes(int fromPage, int toPageExc) {
+        Pageable page = PageRequest.of(fromPage, toPageExc);
+        Page<Quiz> quizPage = quizRepository.findAll(page);
+        return toMapFromList(quizPage.toList());
+    }
+
+    public Map<Long, Quiz> toMapFromList(List<Quiz> quizList) {
+        Map<Long, Quiz> quizMap = new HashMap<>();
+        quizList.forEach(quiz -> quizMap.put(quiz.getId(), quiz));
         return quizMap;
     }
 
