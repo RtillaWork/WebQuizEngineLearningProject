@@ -1,11 +1,8 @@
 package engine.businesslayer;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import engine.security.UserEntity;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -92,16 +89,16 @@ public class PlayerQuiz {
         return completed;
     }
 
-    public void setCompleted(boolean completed) {
-        this.completed = completed;
-    }
-
     public LocalDateTime getLastAttemptedAt() {
         return lastAttemptedAt;
     }
 
     public void setLastAttemptedAt(LocalDateTime lastAttemptedAt) {
         this.lastAttemptedAt = lastAttemptedAt;
+    }
+
+    public Set<Integer> getAnswer() {
+        return answer;
     }
 
 //    public LocalDateTime getFirstPlayedAt() {
@@ -111,10 +108,6 @@ public class PlayerQuiz {
 //    public void setFirstPlayedAt(LocalDateTime firstPlayedAt) {
 //        this.firstPlayedAt = firstPlayedAt;
 //    }
-
-    public Set<Integer> getAnswer() {
-        return answer;
-    }
 
     public void setAnswer(Set<Integer> answer) {
         this.answer = answer;
@@ -130,15 +123,12 @@ public class PlayerQuiz {
         return completed;
     }
 
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
+    }
+
     @Override
     public String toString() {
-        return "PlayerQuiz{" +
-                "id=" + id +
-                ", player=" + player +
-                ", playedQuiz=" + playedQuiz +
-                ", answer=" + answer +
-                ", completed=" + completed +
-                ", lastAttemptedAt=" + lastAttemptedAt +
-                '}';
+        return "PlayerQuiz{" + "id=" + id + ", player=" + player + ", playedQuiz=" + playedQuiz + ", answer=" + answer + ", completed=" + completed + ", lastAttemptedAt=" + lastAttemptedAt + '}';
     }
 }

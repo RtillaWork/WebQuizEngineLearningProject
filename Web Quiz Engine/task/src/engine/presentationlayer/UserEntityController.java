@@ -2,8 +2,8 @@ package engine.presentationlayer;
 
 import engine.businesslayer.PlayerQuiz;
 import engine.persistencelayer.PlayerQuizService;
-import engine.security.UserEntity;
 import engine.persistencelayer.UserEntityRepositoryService;
+import engine.security.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -12,9 +12,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-
 import java.security.Principal;
-import java.util.List;
 
 import static engine.ApiConfig.*;
 

@@ -12,7 +12,7 @@ public class UserMarshalling {
 
     private static final ObjectMapper objectMapper = new ObjectMapper();
     private long id;
-    private UserEntity user;
+    private final UserEntity user;
 
     public UserMarshalling(UserEntity user, long id) {
         this.user = user;
@@ -20,8 +20,7 @@ public class UserMarshalling {
     }
 
     public static String toJson(UserEntity user, long id) throws JsonProcessingException {
-        engine.presentationlayer.UserMarshalling userJsonMarshalling = new engine.presentationlayer
-                .UserMarshalling(user, id);
+        engine.presentationlayer.UserMarshalling userJsonMarshalling = new engine.presentationlayer.UserMarshalling(user, id);
         return objectMapper.writeValueAsString(userJsonMarshalling);
     }
 

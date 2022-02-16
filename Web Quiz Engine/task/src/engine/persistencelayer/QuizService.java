@@ -14,13 +14,11 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 public class QuizService {
+    Map<Long, Quiz> quizMap = new ConcurrentHashMap<>(Collections.emptyMap());
     @Autowired
     private QuizRepository quizRepository;
-
     @Autowired
     private UserEntityRepositoryService uers;
-
-    Map<Long, Quiz> quizMap = new ConcurrentHashMap<>(Collections.emptyMap());
 
     public QuizService() {
     }

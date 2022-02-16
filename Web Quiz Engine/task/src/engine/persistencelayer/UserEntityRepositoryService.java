@@ -1,17 +1,16 @@
 package engine.persistencelayer;
 
 //import engine.security.PasswordEncoderImpl;
+
 import engine.security.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
 import java.util.Optional;
 
 @Service
@@ -22,29 +21,8 @@ public class UserEntityRepositoryService implements UserDetailsService {
     @Autowired
     PasswordEncoder passwordEncoder;
 
-
-    public Optional<UserEntity> findByEmail(String email) {
-        return userEntityRepository.findByEmail(email);
-    }
-
-    public Optional<UserEntity> findByUsername(String username) {
-        return findByEmail(username);
-    }
-
     private static boolean isUsernameValid(UserEntity user) {
-        if ((user.getUsername() == null || user.getUsername().isEmpty()) && user.getEmail() != null) {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    public boolean existsById(Long id) {
-        return findById(id).isPresent();
-    }
-
-    public boolean existsByEmail(String email) {
-        return findByEmail(email).isPresent();
+        return (user.getUsername() != null && !user.getUsername().isEmpty()) || user.getEmail() == null;
     }
 
     private static boolean makeUsernameValid(UserEntity user) {
@@ -54,6 +32,22 @@ public class UserEntityRepositoryService implements UserDetailsService {
             user.setUsername(user.getEmail());
             return true;
         }
+    }
+
+    public Optional<UserEntity> findByEmail(String email) {
+        return userEntityRepository.findByEmail(email);
+    }
+
+    public Optional<UserEntity> findByUsername(String username) {
+        return findByEmail(username);
+    }
+
+    public boolean existsById(Long id) {
+        return findById(id).isPresent();
+    }
+
+    public boolean existsByEmail(String email) {
+        return findByEmail(email).isPresent();
     }
 
     public Optional<UserEntity> findById(Long id) {

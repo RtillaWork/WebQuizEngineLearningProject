@@ -20,7 +20,7 @@ public class RegisteredUserAuthorities implements GrantedAuthority {
      * precision).
      */
 
-    private UserEntity user;
+    private final UserEntity user;
 
     RegisteredUserAuthorities(UserEntity user) {
         this.user = user;

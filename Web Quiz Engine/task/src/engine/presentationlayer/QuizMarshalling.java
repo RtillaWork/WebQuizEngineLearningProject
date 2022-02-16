@@ -1,7 +1,6 @@
 package engine.presentationlayer;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import engine.businesslayer.Quiz;
@@ -13,8 +12,8 @@ import java.util.stream.Collectors;
 
 public class QuizMarshalling {
     private static final ObjectMapper objectMapper = new ObjectMapper();
-    private long id;
-    private Quiz quiz;
+    private final long id;
+    private final Quiz quiz;
 
     public QuizMarshalling(Quiz quiz, long id) {
         this.quiz = quiz;

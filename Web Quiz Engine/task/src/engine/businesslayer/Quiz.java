@@ -47,8 +47,8 @@ public class Quiz {
     private List<PlayerQuiz> quizPlayers;
 
     public Quiz() {
-        this.title = new String();
-        this.text = new String();
+        this.title = "";
+        this.text = "";
         this.options = new String[]{};
         // Make sure answer is consistently a Set<> and never null even if missing from Controller
         this.answer = new HashSet<>(Collections.emptySet());
@@ -108,7 +108,7 @@ public class Quiz {
         this.options = options;
     }
 
-     @JsonIgnore
+    @JsonIgnore
     public Set<Integer> getAnswer() {
         return this.answer;
     }
@@ -144,12 +144,7 @@ public class Quiz {
 
     @Override
     public String toString() {
-        return "Quiz{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", text='" + text + '\'' +
-                ", options=" + Arrays.toString(options) +
-                ", answer=" + answer +
+        return "Quiz{" + "id=" + id + ", title='" + title + '\'' + ", text='" + text + '\'' + ", options=" + Arrays.toString(options) + ", answer=" + answer +
 //                ", quizAuthor=" + quizAuthor +
 //                ", quizPlayers=" + quizPlayers +
                 '}';
