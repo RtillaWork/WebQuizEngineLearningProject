@@ -32,12 +32,13 @@ public class Quiz {
     @OrderColumn
     private String[] options;
 
+    @JsonIgnore
     @ElementCollection
     private Set<Integer> answer; // = new HashSet<>(Collections.emptySet());
 
     @ManyToOne
     @JoinColumn(name = "quiz_author_id", nullable = true)
-//    @JsonIgnore
+    @JsonIgnore
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private UserEntity quizAuthor;
 

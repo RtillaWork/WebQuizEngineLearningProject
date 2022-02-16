@@ -67,10 +67,16 @@ public class QuizService {
         return toMapFromList(quizRepository.findAll());
     }
 
-    public Map<Long, Quiz> findAllQuizzes(int fromPage, int toPageExc) {
+//    public Map<Long, Quiz> findAllQuizzes(int fromPage, int toPageExc) {
+//        Pageable page = PageRequest.of(fromPage, toPageExc);
+//        Page<Quiz> quizPage = quizRepository.findAll(page);
+//        return toMapFromList(quizPage.toList());
+//    }
+
+    public Page<Quiz> findAllQuizzes(int fromPage, int toPageExc) {
         Pageable page = PageRequest.of(fromPage, toPageExc);
         Page<Quiz> quizPage = quizRepository.findAll(page);
-        return toMapFromList(quizPage.toList());
+        return quizPage;
     }
 
     public Map<Long, Quiz> toMapFromList(List<Quiz> quizList) {

@@ -7,6 +7,8 @@ import engine.businesslayer.Quiz;
 import engine.persistencelayer.UserEntityRepositoryService;
 import engine.security.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.AuthenticatedPrincipal;
@@ -82,10 +84,21 @@ public class QuizEngineController {
 //    }
 
     @GetMapping(API_GET_QUIZZES_WITH_PAGING)
-    public ResponseEntity<String> getQuizzesWithPaging(@RequestParam(defaultValue = "0") int startingPage)
+    public ResponseEntity<Page<Quiz>> getQuizzesWithPaging(@RequestParam(defaultValue = "0") int page)
             throws JsonProcessingException {
-        var quizzes = quizService.findAllQuizzes(startingPage, API_MAX_PAGE_SIZE_QUIZZES);
-        return new ResponseEntity<String>(QuizMarshalling.toJson(quizzes), HttpStatus.OK);
+        var quizzes = quizService.findAllQuizzes(page, API_MAX_PAGE_SIZE_QUIZZES);
+//        return new ResponseEntity<String>(QuizMarshalling.toJson(quizzes), HttpStatus.OK);
+        return new ResponseEntity<>(quizzes, HttpStatus.OK);
+
+    }
+
+    @GetMapping(DEBUG_API_GET_QUIZZES_WITH_PAGING_WITH_TO_MAP)
+    public ResponseEntity<String> DEBUG_getQuizzesWithPaging(@RequestParam(defaultValue = "0") int page)
+            throws JsonProcessingException {
+        var quizzes = quizService.findAllQuizzes(page, API_MAX_PAGE_SIZE_QUIZZES);
+        return new ResponseEntity<String>(QuizMarshalling.toJson
+                (quizService.toMapFromList(quizzes.toList())), HttpStatus.OK
+        );
     }
 
     @DeleteMapping(API_DELETE_QUIZ)
