@@ -11,8 +11,8 @@ import java.util.Set;
 public class UserMarshalling {
 
     private static final ObjectMapper objectMapper = new ObjectMapper();
-    private long id;
     private final UserEntity user;
+    private long id;
 
     public UserMarshalling(UserEntity user, long id) {
         this.user = user;
