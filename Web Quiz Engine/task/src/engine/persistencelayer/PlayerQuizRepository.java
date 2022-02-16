@@ -34,4 +34,7 @@ public interface PlayerQuizRepository extends JpaRepository<PlayerQuiz, Long> {
 
     Page<PlayerQuiz> findByPlayerAndCompleted(UserEntity player, boolean isCompleted, Pageable pageable);
 
+    Page<PlayerQuiz>
+    findByPlayerAndCompletedOrderByLastAttemptedAtDesc(UserEntity player, boolean isCompleted, Pageable pageable);
+
 }

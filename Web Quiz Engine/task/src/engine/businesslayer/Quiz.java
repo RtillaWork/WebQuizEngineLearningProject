@@ -15,7 +15,7 @@ import java.util.*;
 public class Quiz {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
     @NotNull
@@ -43,6 +43,7 @@ public class Quiz {
     //    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private UserEntity quizAuthor;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "playedQuiz", orphanRemoval = true)
     private List<PlayerQuiz> quizPlayers;
 

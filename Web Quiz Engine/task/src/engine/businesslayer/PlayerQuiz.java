@@ -1,5 +1,6 @@
 package engine.businesslayer;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import engine.security.UserEntity;
@@ -14,16 +15,16 @@ import java.util.Set;
 public class PlayerQuiz {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @JsonIgnore
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private UserEntity player;
 
     //    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @JsonIgnore
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Quiz playedQuiz;
 
     @JsonIgnore
@@ -36,12 +37,12 @@ public class PlayerQuiz {
 //    private LocalDateTime completedAt;
 
     @JsonProperty("completedAt")
-    @UpdateTimestamp
+//    @UpdateTimestamp
     private LocalDateTime lastAttemptedAt;
 
-    @JsonIgnore
-    @CreationTimestamp
-    private LocalDateTime firstPlayedAt;
+//    @JsonIgnore
+//    @CreationTimestamp
+//    private LocalDateTime firstPlayedAt;
 
 
     public PlayerQuiz() {
@@ -58,8 +59,9 @@ public class PlayerQuiz {
     public PlayerQuiz(UserEntity player, Quiz playedQuiz, Set<Integer> answer, boolean completed) {
         this.player = player;
         this.playedQuiz = playedQuiz;
-        this.completed = completed;
         this.answer = answer;
+        this.completed = completed;
+        this.lastAttemptedAt = LocalDateTime.now();
     }
 
 //    public PlayerQuiz(UserEntity player, Quiz quiz, boolean success, LocalDateTime attemptedAt) {
@@ -119,13 +121,13 @@ public class PlayerQuiz {
         this.lastAttemptedAt = lastAttemptedAt;
     }
 
-    public LocalDateTime getFirstPlayedAt() {
-        return firstPlayedAt;
-    }
-
-    public void setFirstPlayedAt(LocalDateTime firstPlayedAt) {
-        this.firstPlayedAt = firstPlayedAt;
-    }
+//    public LocalDateTime getFirstPlayedAt() {
+//        return firstPlayedAt;
+//    }
+//
+//    public void setFirstPlayedAt(LocalDateTime firstPlayedAt) {
+//        this.firstPlayedAt = firstPlayedAt;
+//    }
 
     public Set<Integer> getAnswer() {
         return answer;
@@ -133,5 +135,11 @@ public class PlayerQuiz {
 
     public void setAnswer(Set<Integer> answer) {
         this.answer = answer;
+    }
+
+    @JsonProperty(value = "id", access = JsonProperty.Access.READ_ONLY)
+    public Long getPlayedQuizId() {
+//        return this.playedQuiz.getId();
+        return getPlayedQuiz().getId();
     }
 }

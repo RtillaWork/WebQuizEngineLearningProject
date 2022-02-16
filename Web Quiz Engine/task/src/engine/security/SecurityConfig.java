@@ -42,6 +42,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/actuator/shutdown/**").permitAll()
 //                .antMatchers("/h2-console/").permitAll()
 //                .mvcMatchers("/h2-console/**").permitAll()
+                .antMatchers("/console/**").permitAll()
                 .antMatchers(HttpMethod.POST, API_REGISTER_USER + "/**").permitAll()
                 .antMatchers(API_ROOT_PATH + "/**").authenticated()
 //                .antMatchers(API_ROOT_PATH + "/**").authenticated()
@@ -49,6 +50,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .httpBasic()
                 .and()
                 .formLogin().disable();
+
+        http.headers().frameOptions().disable();
     }
 
 
