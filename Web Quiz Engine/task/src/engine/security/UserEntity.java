@@ -48,7 +48,7 @@ public class UserEntity implements UserDetails {
     @OneToMany(mappedBy = "quizAuthor", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<Quiz> quizzes;
 
-    @OneToMany(mappedBy = "player", orphanRemoval = true)
+    @OneToMany(mappedBy = "player", cascade = CascadeType.ALL)
     private List<PlayerQuiz> playerQuizzes;
 
     public UserEntity() {
@@ -122,6 +122,15 @@ public class UserEntity implements UserDetails {
 
     public void setQuizzes(Set<Quiz> quizzes) {
         this.quizzes = quizzes;
+    }
+
+
+    public List<PlayerQuiz> getPlayerQuizzes() {
+        return playerQuizzes;
+    }
+
+    public void setPlayerQuizzes(List<PlayerQuiz> playerQuizzes) {
+        this.playerQuizzes = playerQuizzes;
     }
 
     /**

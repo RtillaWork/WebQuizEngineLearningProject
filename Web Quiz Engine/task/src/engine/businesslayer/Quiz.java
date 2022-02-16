@@ -32,7 +32,6 @@ public class Quiz {
     @OrderColumn
     private String[] options;
 
-    //    @JsonIgnore
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @ElementCollection
     private Set<Integer> answer; // = new HashSet<>(Collections.emptySet());
@@ -44,7 +43,7 @@ public class Quiz {
     private UserEntity quizAuthor;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "playedQuiz", orphanRemoval = true)
+    @OneToMany(mappedBy = "playedQuiz", cascade = CascadeType.ALL)
     private List<PlayerQuiz> quizPlayers;
 
     public Quiz() {
@@ -133,5 +132,13 @@ public class Quiz {
 
     public void setQuizAuthor(UserEntity quizAuthor) {
         this.quizAuthor = quizAuthor;
+    }
+
+    public List<PlayerQuiz> getQuizPlayers() {
+        return quizPlayers;
+    }
+
+    public void setQuizPlayers(List<PlayerQuiz> quizPlayers) {
+        this.quizPlayers = quizPlayers;
     }
 }

@@ -142,4 +142,8 @@ public class PlayerQuiz {
 //        return this.playedQuiz.getId();
         return getPlayedQuiz().getId();
     }
+
+    public boolean isCompleted() {
+        return completed;
+    }
 }
