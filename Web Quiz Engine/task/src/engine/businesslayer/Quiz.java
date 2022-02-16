@@ -32,19 +32,19 @@ public class Quiz {
     @OrderColumn
     private String[] options;
 
-//    @JsonIgnore
-@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-@ElementCollection
-private Set<Integer> answer; // = new HashSet<>(Collections.emptySet());
+    //    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @ElementCollection
+    private Set<Integer> answer; // = new HashSet<>(Collections.emptySet());
 
     @ManyToOne
     @JoinColumn(name = "quiz_author_id", nullable = true)
     @JsonIgnore
-//    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    //    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private UserEntity quizAuthor;
 
-    @OneToMany(mappedBy = "quiz", orphanRemoval = true)
-    private PlayerQuiz quizPlayers;
+    @OneToMany(mappedBy = "playedQuiz", orphanRemoval = true)
+    private List<PlayerQuiz> quizPlayers;
 
     public Quiz() {
         this.title = new String();

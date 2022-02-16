@@ -24,12 +24,14 @@ public interface PlayerQuizRepository extends JpaRepository<PlayerQuiz, Long> {
 //    Page<PlayerQuiz> findByPlayerAndCompleted(Pageable pageable);
 //    List<PlayerQuiz> findByPlayerAndIscompleted();
 
-    List<PlayerQuiz> findByPlayer(UserEntity player);
-
-    List<PlayerQuiz> findByPlayerAndIscompleted(UserEntity player);
+//    List<PlayerQuiz> findByPlayer(UserEntity player);
+//
+//    List<PlayerQuiz> findByPlayerAndIsCompleted(UserEntity player);
 
     Page<PlayerQuiz> findByPlayer(UserEntity player, Pageable pageable);
 
-    Page<PlayerQuiz> findByPlayerAndIscompleted(UserEntity player, Pageable pageable);
+    Page<PlayerQuiz> findByCompleted(Boolean isCompleted, Pageable pageable);
+
+    Page<PlayerQuiz> findByPlayerAndCompleted(UserEntity player, boolean isCompleted, Pageable pageable);
 
 }

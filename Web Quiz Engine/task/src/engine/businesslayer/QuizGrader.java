@@ -44,7 +44,7 @@ public class QuizGrader {
 
     public String gradedResponse(PlayerQuiz playedQuiz) {
 
-        boolean success = gradeAnswer(playedQuiz.getQuiz(), new QuizAnswer(playedQuiz.getAnswer()));
+        boolean success = gradeAnswer(playedQuiz.getPlayedQuiz(), new QuizAnswer(playedQuiz.getAnswer()));
 //        QuizGrader.feedback(quizAnswer, quiz.get())
 //        OR
         //        QuizGrader.gradedResponse(quizAnswer, quiz.get())

@@ -1,10 +1,12 @@
 package engine.presentationlayer;
 
+import javax.persistence.Entity;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+//@Entity
 public class QuizAnswer {
     private Set<Integer> answer;
 

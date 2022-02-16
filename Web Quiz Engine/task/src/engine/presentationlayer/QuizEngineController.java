@@ -57,6 +57,7 @@ public class QuizEngineController {
         }
     }
 
+//    @Deprecated
 //    @PostMapping(API_SOLVE_QUIZ)
 //    public ResponseEntity<String> solveQuiz(@PathVariable @NotNull long id,
 //                                            @RequestBody(required = false) QuizAnswer quizAnswer) {
@@ -66,7 +67,7 @@ public class QuizEngineController {
 //            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 //        } else {
 //            return new ResponseEntity<String>(
-//                    QuizGrader.feedback(quizAnswer, quiz.get()),
+//                    playerQuizService.feedback(quiz.get(), quizAnswer),
 //                    HttpStatus.OK);
 //        }
 //    }

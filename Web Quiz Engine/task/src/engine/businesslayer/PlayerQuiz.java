@@ -1,6 +1,5 @@
 package engine.businesslayer;
 
-import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import engine.security.UserEntity;
@@ -18,16 +17,21 @@ public class PlayerQuiz {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
+    @JsonIgnore
     @ManyToOne
     private UserEntity player;
 
+    //    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @JsonIgnore
     @ManyToOne
-    private Quiz quiz;
+    private Quiz playedQuiz;
 
-    private boolean isCompleted = false;
-
+    @JsonIgnore
     @ElementCollection
     private Set<Integer> answer; // = new HashSet<>(Collections.emptySet());
+
+    @JsonIgnore
+    private boolean completed = false;
 
 //    private LocalDateTime completedAt;
 
@@ -43,26 +47,33 @@ public class PlayerQuiz {
     public PlayerQuiz() {
     }
 
-    public PlayerQuiz(Long id, UserEntity player, Quiz quiz, boolean isCompleted, Set<Integer> answer, LocalDateTime lastAttemptedAt) {
+    public PlayerQuiz(UserEntity player, Quiz playedQuiz, Set<Integer> answer, boolean completed, LocalDateTime lastAttemptedAt) {
         this.player = player;
-        this.quiz = quiz;
-        this.isCompleted = isCompleted;
+        this.playedQuiz = playedQuiz;
+        this.completed = completed;
         this.answer = answer;
         this.lastAttemptedAt = lastAttemptedAt;
     }
 
-    public PlayerQuiz(Quiz quiz, UserEntity player, boolean success, LocalDateTime attemptedAt) {
-        this.quiz = quiz;
+    public PlayerQuiz(UserEntity player, Quiz playedQuiz, Set<Integer> answer, boolean completed) {
         this.player = player;
-        this.isCompleted = success;
-        this.lastAttemptedAt = attemptedAt;
+        this.playedQuiz = playedQuiz;
+        this.completed = completed;
+        this.answer = answer;
     }
 
-    public PlayerQuiz(Quiz quiz, UserEntity player, boolean success) {
-        this.quiz = quiz;
-        this.player = player;
-        this.isCompleted = success;
-    }
+//    public PlayerQuiz(UserEntity player, Quiz quiz, boolean success, LocalDateTime attemptedAt) {
+//        this.quiz = quiz;
+//        this.player = player;
+//        this.isCompleted = success;
+//        this.lastAttemptedAt = attemptedAt;
+//    }
+//
+//    public PlayerQuiz(UserEntity player, Quiz quiz, boolean success) {
+//        this.quiz = quiz;
+//        this.player = player;
+//        this.isCompleted = success;
+//    }
 
     public Long getId() {
         return id;
@@ -80,20 +91,24 @@ public class PlayerQuiz {
         this.player = player;
     }
 
-    public Quiz getQuiz() {
-        return quiz;
+    public Quiz getPlayedQuiz() {
+        return playedQuiz;
     }
 
-    public void setQuiz(Quiz quiz) {
-        this.quiz = quiz;
+    public void setPlayedQuiz(Quiz playedQuiz) {
+        this.playedQuiz = playedQuiz;
     }
 
-    public boolean isCompleted() {
-        return isCompleted;
+//    public boolean isCompleted() {
+//        return isCompleted;
+//    }
+
+    public boolean completed() {
+        return completed;
     }
 
     public void setCompleted(boolean completed) {
-        isCompleted = completed;
+        this.completed = completed;
     }
 
     public LocalDateTime getLastAttemptedAt() {
