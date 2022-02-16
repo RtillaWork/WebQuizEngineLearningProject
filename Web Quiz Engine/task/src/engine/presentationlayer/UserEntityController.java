@@ -1,17 +1,23 @@
 package engine.presentationlayer;
 
+import engine.businesslayer.PlayerQuiz;
 import engine.security.UserEntity;
 import engine.persistencelayer.UserEntityRepositoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
+import java.security.Principal;
+
+import static engine.ApiConfig.API_QUIZZES_COMPLETED_WITH_PAGING;
 import static engine.ApiConfig.API_REGISTER_USER;
 
 @RestController
@@ -19,16 +25,32 @@ import static engine.ApiConfig.API_REGISTER_USER;
 public class UserEntityController {
 
     @Autowired
-    UserEntityRepositoryService userEntityRepositoryService;
+    UserEntityRepositoryService uers;
+
+    @Autowired
+    PlayerQuizService playerQuizService;
 
     @PostMapping(API_REGISTER_USER)
     public ResponseEntity<UserEntity> registerUser(@Valid @RequestBody UserEntity user) {
-        UserEntity newUser = userEntityRepositoryService.save(user);
+        UserEntity newUser = uers.save(user);
         if (newUser != null) {
             return new ResponseEntity<>(newUser, HttpStatus.OK);
         } else {
             // TODO return this if email already taken
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+    }
+
+    @GetMapping(API_QUIZZES_COMPLETED_WITH_PAGING)
+    public ResponseEntity<Page<PlayerQuiz>> getPlayerQuizzes(Principal principal) {
+        UserEntity player = uers.findByUsername(principal.getName()).orElse(null);
+
+        Page<PlayerQuiz> playerQuiz = playerQuizService.findByPlayerAndCompleted(player).orElse(null);
+        if (playerQuiz == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(playerQuiz, HttpStatus.OK);
         }
 
     }

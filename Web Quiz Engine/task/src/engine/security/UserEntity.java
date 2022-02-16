@@ -1,5 +1,6 @@
 package engine.security;
 
+import engine.businesslayer.PlayerQuiz;
 import engine.businesslayer.Quiz;
 import engine.security.RegisteredUserAuthorities;
 import org.hibernate.validator.constraints.UniqueElements;
@@ -14,6 +15,7 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -45,6 +47,9 @@ public class UserEntity implements UserDetails {
 
     @OneToMany(mappedBy = "quizAuthor", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<Quiz> quizzes;
+
+    @OneToMany(mappedBy = "player", orphanRemoval = true)
+    private List<PlayerQuiz> playerQuizzes;
 
     public UserEntity() {
         this.username = "";

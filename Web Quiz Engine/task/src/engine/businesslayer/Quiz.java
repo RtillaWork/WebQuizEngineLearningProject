@@ -43,6 +43,9 @@ private Set<Integer> answer; // = new HashSet<>(Collections.emptySet());
 //    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private UserEntity quizAuthor;
 
+    @OneToMany(mappedBy = "quiz", orphanRemoval = true)
+    private PlayerQuiz quizPlayers;
+
     public Quiz() {
         this.title = new String();
         this.text = new String();

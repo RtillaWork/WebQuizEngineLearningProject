@@ -52,9 +52,24 @@ public class QuizEngineController {
         }
     }
 
+//    @PostMapping(API_SOLVE_QUIZ)
+//    public ResponseEntity<String> solveQuiz(@PathVariable @NotNull long id,
+//                                            @RequestBody(required = false) QuizAnswer quizAnswer) {
+//        quizAnswer = (quizAnswer == null ? new QuizAnswer() : quizAnswer);
+//        Optional<Quiz> quiz = quizService.findById(id); // quizMap.get(id);
+//        if (quiz.isEmpty()) {
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        } else {
+//            return new ResponseEntity<String>(
+//                    QuizGrader.feedback(quizAnswer, quiz.get()),
+//                    HttpStatus.OK);
+//        }
+//    }
+
     @PostMapping(API_SOLVE_QUIZ)
     public ResponseEntity<String> solveQuiz(@PathVariable @NotNull long id,
-                                            @RequestBody(required = false) QuizAnswer quizAnswer) {
+                                            @RequestBody(required = false) QuizAnswer quizAnswer,
+                                            Principal principal) {
         quizAnswer = (quizAnswer == null ? new QuizAnswer() : quizAnswer);
         Optional<Quiz> quiz = quizService.findById(id); // quizMap.get(id);
         if (quiz.isEmpty()) {

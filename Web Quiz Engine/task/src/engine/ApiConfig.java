@@ -22,5 +22,7 @@ public class ApiConfig {
     public static final String API_SESSION_LOGIN = API_ROOT_PATH + "/login";
     public static final String API_SESSION_LOGOUT = API_ROOT_PATH + "/logout";
 
+    public static final String API_QUIZZES_COMPLETED_WITH_PAGING = API_QUIZZES_PATH + "/completed"; // GET with paging
+
     public static final int API_MAX_PAGE_SIZE_QUIZZES = 10;
 }
