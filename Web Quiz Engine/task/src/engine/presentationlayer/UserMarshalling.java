@@ -1,5 +1,6 @@
 package engine.presentationlayer;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import engine.businesslayer.Quiz;
@@ -32,31 +33,15 @@ public class UserMarshalling {
         this.id = id;
     }
 
-//    public void setEmail(String email) {
-//        this.email = email;
-//    }
-
     public String getEmail() {
         return user.getEmail();
     }
-
-//    public void setUsername(String username) {
-//        this.username = username;
-//    }
-
-//    public String getPassword() {
-//        return password;
-//    }
-
-//    public void setPassword(String password) {
-//        this.password = password;
-//    }
 
     public String getUsername() {
         return user.getUsername();
     }
 
-//    @JsonIgnore
+    @JsonIgnore
     public Set<Quiz> getQuizzes() {
         return user.getQuizzes();
     }

@@ -76,9 +76,6 @@ public class UserEntityRepositoryService implements UserDetailsService {
         } catch (DataIntegrityViolationException e) {
             return null;
         }
-//        else {
-//            throw new Exception("Error saving UserEntity: makeUsernameValid(...) failed");
-//        }
     }
 
     @Override

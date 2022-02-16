@@ -35,24 +35,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 //        http.authorizeRequests().anyRequest().authenticated().and().formLogin().and().httpBasic();
         http
-//                .csrf().and().cors().disable()
                 .csrf().disable()
                 .authorizeRequests()
-//                .anyRequest().permitAll()
                 .antMatchers(HttpMethod.POST, "/actuator/shutdown/**").permitAll()
-//                .antMatchers("/h2-console/").permitAll()
-//                .mvcMatchers("/h2-console/**").permitAll()
 //                .antMatchers("/console/**").permitAll()
                 .antMatchers(HttpMethod.POST, API_REGISTER_USER + "/**").permitAll()
                 .antMatchers(API_ROOT_PATH + "/**").authenticated()
-//                .antMatchers(API_ROOT_PATH + "/**").authenticated()
                 .and()
                 .httpBasic()
                 .and()
                 .formLogin().disable();
-
-//        http.headers().frameOptions().disable();
+//        http.headers().frameOptions().disable();  // h2-console
     }
-
-
 }

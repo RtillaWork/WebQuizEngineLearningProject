@@ -36,11 +36,9 @@ public class PlayerQuizService {
     }
 
     public Page<PlayerQuiz> findByPlayerAndIsCompletedSorted(UserEntity player, int fromPage, int pageSize) {
-//        Pageable page = PageRequest.of(fromPage, pageSize);
         Pageable page = PageRequest.of(fromPage, pageSize,
                 Sort.by(Sort.Direction.DESC, "lastAttemptedAt"));
-//        Page<PlayerQuiz> playedQuizzesPage =
-//                pqr.findByPlayerAndCompletedOrderByLastAttemptedAtDesc(player, true, page);
+
         Page<PlayerQuiz> playedQuizzesPage = pqr.findByPlayerAndCompleted(player, true, page);
         return playedQuizzesPage;
     }
@@ -55,24 +53,10 @@ public class PlayerQuizService {
     }
 
     public PlayerQuiz saveIfSuccess(Quiz quiz, QuizAnswer quizAnswer, UserEntity player) {
-//        LocalDateTime attemptedAt = LocalDateTime.now();
-//        boolean success = quizGrader.gradeAnswer(quiz, quizAnswer);
+
         boolean success = grade(quiz, quizAnswer);
-//        PlayerQuiz playedQuiz = pqr.save(new PlayerQuiz(quiz, player, success));
-//        PlayerQuiz playedQuiz = pqr.save(new PlayerQuiz(player, quiz, quizAnswer.getAnswer(), success));
-//        PlayerQuiz playedQuiz = pqr.saveAndFlush(new PlayerQuiz(player, quiz, quizAnswer.getAnswer(), success));
         PlayerQuiz playedQuiz = new PlayerQuiz(player, quiz, quizAnswer.getAnswer(), success, LocalDateTime.now());
-//        if (success) {
-        System.out.println("DEBUGDEBUGDEBUG IF: " + playedQuiz.toString());
-
         return pqr.saveAndFlush(playedQuiz);
-//        } else {
-//            System.out.println("DEBUGDEBUGDEBUG ELSE: " + playedQuiz.toString());
-//
-//            return  playedQuiz;
-//        }
-
-//        PlayerQuiz playedQuiz = new PlayerQuiz(quiz, player, success, attemptedAt);
     }
 
     public String feedback(Quiz quiz, QuizAnswer quizAnswer) {

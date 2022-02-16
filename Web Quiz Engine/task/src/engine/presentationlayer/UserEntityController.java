@@ -40,19 +40,6 @@ public class UserEntityController {
 
     }
 
-//    @Deprecated
-//    @GetMapping(DEBUG_API_QUIZZES_PLAYED_ALL)
-//    public ResponseEntity<List<PlayerQuiz>> getPlayedQuizzes(Principal principal) {
-//        UserEntity player = uers.findByUsername(principal.getName()).orElse(null);
-//
-//        List<PlayerQuiz> playerQuizzes = playerQuizService.findAllByPlayerAndIsCompleted(player);
-//        if (playerQuizzes == null) {
-//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//        } else {
-//            return new ResponseEntity<>(playerQuizzes, HttpStatus.OK);
-//        }
-//    }
-
     @GetMapping(API_QUIZZES_COMPLETED_WITH_PAGING)
     public ResponseEntity<Page<PlayerQuiz>> getCompletedQuizzes(@RequestParam(defaultValue = "0") int page,
                                                                 Principal principal) {
@@ -60,7 +47,6 @@ public class UserEntityController {
 
         Page<PlayerQuiz> playerQuiz = playerQuizService
                 .findByPlayerAndIsCompletedSorted(player, page, API_MAX_PAGE_SIZE_PLAYED_QUIZZES);
-        //.orElse(null);
         if (playerQuiz == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {

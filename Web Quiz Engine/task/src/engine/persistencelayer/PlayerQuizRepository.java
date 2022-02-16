@@ -13,7 +13,6 @@ import java.util.Optional;
 @Repository
 public interface PlayerQuizRepository extends JpaRepository<PlayerQuiz, Long> {
 
-    //    PlayerQuiz findById(Long id);
     List<PlayerQuiz> findAll();
 
     Page<PlayerQuiz> findAll(Pageable pageable);
@@ -21,12 +20,7 @@ public interface PlayerQuizRepository extends JpaRepository<PlayerQuiz, Long> {
     <S extends PlayerQuiz> S save(S entity);
 
     Optional<PlayerQuiz> findById(Long aLong);
-//    Page<PlayerQuiz> findByPlayerAndCompleted(Pageable pageable);
-//    List<PlayerQuiz> findByPlayerAndIscompleted();
 
-//    List<PlayerQuiz> findByPlayer(UserEntity player);
-//
-//    List<PlayerQuiz> findByPlayerAndIsCompleted(UserEntity player);
 
     Page<PlayerQuiz> findByPlayer(UserEntity player, Pageable pageable);
 

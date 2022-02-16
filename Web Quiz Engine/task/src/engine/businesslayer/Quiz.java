@@ -108,12 +108,12 @@ public class Quiz {
         this.options = options;
     }
 
-    // @JsonIgnore
+     @JsonIgnore
     public Set<Integer> getAnswer() {
         return this.answer;
     }
 
-    // @JsonProperty
+    @JsonProperty
     public void setAnswer(Set<Integer> answer) {
         this.answer = (answer == null ? new HashSet<>(Collections.emptySet()) : answer);
     }

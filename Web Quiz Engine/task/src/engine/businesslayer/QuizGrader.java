@@ -34,22 +34,12 @@ public class QuizGrader {
 
     public String gradedResponse(Quiz quiz, QuizAnswer quizAnswer, UserEntity player) {
         boolean success = gradeAnswer(quiz, quizAnswer);
-//        QuizGrader.feedback(quizAnswer, quiz.get())
-//        OR
-        //        QuizGrader.gradedResponse(quizAnswer, quiz.get())
-
-//TODO
         return String.format(quizResponseJsonTemplate, success, feedbackSuccess.get(success));
     }
 
     public String gradedResponse(PlayerQuiz playedQuiz) {
 
         boolean success = gradeAnswer(playedQuiz.getPlayedQuiz(), new QuizAnswer(playedQuiz.getAnswer()));
-//        QuizGrader.feedback(quizAnswer, quiz.get())
-//        OR
-        //        QuizGrader.gradedResponse(quizAnswer, quiz.get())
-
-//TODO
         return String.format(quizResponseJsonTemplate, success, feedbackSuccess.get(success));
     }
 
@@ -64,6 +54,4 @@ public class QuizGrader {
                 quizAnswer.getAnswer(), quiz.getAnswer(),
                 quizAnswer.getAnswer().equals(quiz.getAnswer()));
     }
-
-
 }

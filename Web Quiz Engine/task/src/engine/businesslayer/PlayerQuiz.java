@@ -64,19 +64,6 @@ public class PlayerQuiz {
         this.lastAttemptedAt = LocalDateTime.now();
     }
 
-//    public PlayerQuiz(UserEntity player, Quiz quiz, boolean success, LocalDateTime attemptedAt) {
-//        this.quiz = quiz;
-//        this.player = player;
-//        this.isCompleted = success;
-//        this.lastAttemptedAt = attemptedAt;
-//    }
-//
-//    public PlayerQuiz(UserEntity player, Quiz quiz, boolean success) {
-//        this.quiz = quiz;
-//        this.player = player;
-//        this.isCompleted = success;
-//    }
-
     public Long getId() {
         return id;
     }
@@ -100,10 +87,6 @@ public class PlayerQuiz {
     public void setPlayedQuiz(Quiz playedQuiz) {
         this.playedQuiz = playedQuiz;
     }
-
-//    public boolean isCompleted() {
-//        return isCompleted;
-//    }
 
     public boolean completed() {
         return completed;

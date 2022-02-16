@@ -16,35 +16,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 @SpringBootApplication
 public class WebQuizEngine {
 
-    @Autowired
-    QuizService qs;
-
-    @Autowired
-    PlayerQuizService pqs;
-
-    @Autowired
-    UserEntityRepositoryService uers;
-
     public static void main(String[] args) {
 
         SpringApplication.run(WebQuizEngine.class, args);
-    }
-
-    public class MyDebugRunner implements CommandLineRunner {
-
-        /**
-         * Callback used to run the bean.
-         *
-         * @param args incoming main method arguments
-         * @throws Exception on error
-         */
-        @Override
-        public void run(String... args) throws Exception {
-
-            System.out.println("STARTING COMMANDLINE RUNNERS");
-
-
-        }
     }
 
 }

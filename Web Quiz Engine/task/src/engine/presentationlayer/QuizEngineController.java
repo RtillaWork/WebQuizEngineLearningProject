@@ -49,28 +49,12 @@ public class QuizEngineController {
         // NOTE Keys are a set, do not repeat, simplistic next id is current size starting with 0
         quiz = quizService.save(quiz, principal.getName());
         if (quiz != null) {
-            long id = quiz.getId(); // Math.max(quizMap.size(), 0);
-//        quizMap.put(id, quiz);
+            long id = quiz.getId();
             return new ResponseEntity<>(QuizMarshalling.toJson(quiz, id), HttpStatus.OK);
         } else {
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
     }
-
-//    @Deprecated
-//    @PostMapping(API_SOLVE_QUIZ)
-//    public ResponseEntity<String> solveQuiz(@PathVariable @NotNull long id,
-//                                            @RequestBody(required = false) QuizAnswer quizAnswer) {
-//        quizAnswer = (quizAnswer == null ? new QuizAnswer() : quizAnswer);
-//        Optional<Quiz> quiz = quizService.findById(id); // quizMap.get(id);
-//        if (quiz.isEmpty()) {
-//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//        } else {
-//            return new ResponseEntity<String>(
-//                    playerQuizService.feedback(quiz.get(), quizAnswer),
-//                    HttpStatus.OK);
-//        }
-//    }
 
     @PostMapping(API_SOLVE_QUIZ)
     public ResponseEntity<String> solveQuiz(@PathVariable @NotNull long id,
@@ -93,10 +77,6 @@ public class QuizEngineController {
             } else {
                 return new ResponseEntity<>(HttpStatus.I_AM_A_TEAPOT);
             }
-
-//            return new ResponseEntity<String>(
-//                    QuizGrader.gradedResponse(quizAnswer, quiz.get(), player),
-//                    HttpStatus.OK);
         }
     }
 
@@ -111,17 +91,10 @@ public class QuizEngineController {
         }
     }
 
-//    @GetMapping(API_GET_QUIZZES)
-//    public ResponseEntity<String> getQuizzes() throws JsonProcessingException {
-//        var quizzes = quizService.asMapFindAll();
-//        return new ResponseEntity<String>(QuizMarshalling.toJson(quizzes), HttpStatus.OK);
-//    }
-
     @GetMapping(API_GET_QUIZZES_WITH_PAGING)
     public ResponseEntity<Page<Quiz>> getQuizzesWithPaging(@RequestParam(defaultValue = "0") int page)
             throws JsonProcessingException {
         var quizzes = quizService.findAllQuizzes(page, API_MAX_PAGE_SIZE_QUIZZES);
-//        return new ResponseEntity<String>(QuizMarshalling.toJson(quizzes), HttpStatus.OK);
         return new ResponseEntity<>(quizzes, HttpStatus.OK);
 
     }
@@ -148,7 +121,6 @@ public class QuizEngineController {
         } else {
             quizService.delete(quiz, author);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-
         }
     }
 }
