@@ -10,6 +10,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -35,9 +36,12 @@ public class PlayerQuizService {
     }
 
     public Page<PlayerQuiz> findByPlayerAndIsCompletedSorted(UserEntity player, int fromPage, int toPageExc) {
-        Pageable page = PageRequest.of(fromPage, toPageExc);
-        Page<PlayerQuiz> playedQuizzesPage =
-                pqr.findByPlayerAndCompletedOrderByLastAttemptedAtDesc(player, true, page);
+//        Pageable page = PageRequest.of(fromPage, toPageExc);
+        Pageable page = PageRequest.of(fromPage, toPageExc,
+                Sort.by(Sort.Direction.DESC, "lastAttemptedAt"));
+//        Page<PlayerQuiz> playedQuizzesPage =
+//                pqr.findByPlayerAndCompletedOrderByLastAttemptedAtDesc(player, true, page);
+        Page<PlayerQuiz> playedQuizzesPage = pqr.findByPlayerAndCompleted(player, false, page);
         return playedQuizzesPage;
     }
 

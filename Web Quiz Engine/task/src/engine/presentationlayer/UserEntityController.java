@@ -59,7 +59,7 @@ public class UserEntityController {
         UserEntity player = uers.findByUsername(principal.getName()).orElse(null);
 
         Page<PlayerQuiz> playerQuiz = playerQuizService
-                .findByPlayerAndIsCompleted(player, page, API_MAX_PAGE_SIZE_PLAYED_QUIZZES);
+                .findByPlayerAndIsCompletedSorted(player, page, API_MAX_PAGE_SIZE_PLAYED_QUIZZES);
         //.orElse(null);
         if (playerQuiz == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
