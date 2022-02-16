@@ -1,6 +1,7 @@
 package engine.presentationlayer;
 
 import engine.businesslayer.PlayerQuiz;
+import engine.persistencelayer.PlayerQuizService;
 import engine.security.UserEntity;
 import engine.persistencelayer.UserEntityRepositoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,17 +9,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
 import java.security.Principal;
+import java.util.List;
 
-import static engine.ApiConfig.API_QUIZZES_COMPLETED_WITH_PAGING;
-import static engine.ApiConfig.API_REGISTER_USER;
+import static engine.ApiConfig.*;
 
 @RestController
 @Validated
@@ -42,11 +40,27 @@ public class UserEntityController {
 
     }
 
+//    @GetMapping(DEBUG_API_QUIZZES_PLAYED_ALL)
+//    public ResponseEntity<List<PlayerQuiz>> getPlayedQuizzes(Principal principal) {
+//        UserEntity player = uers.findByUsername(principal.getName()).orElse(null);
+//
+//        List<PlayerQuiz> playerQuizzes = playerQuizService.findAllByPlayerAndIscompleted(player);
+//        if (playerQuizzes == null) {
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        } else {
+//            return new ResponseEntity<>(playerQuizzes, HttpStatus.OK);
+//        }
+//
+//    }
+
     @GetMapping(API_QUIZZES_COMPLETED_WITH_PAGING)
-    public ResponseEntity<Page<PlayerQuiz>> getPlayerQuizzes(Principal principal) {
+    public ResponseEntity<Page<PlayerQuiz>> getCompletedQuizzes(@RequestParam(defaultValue = "0") int page,
+                                                                Principal principal) {
         UserEntity player = uers.findByUsername(principal.getName()).orElse(null);
 
-        Page<PlayerQuiz> playerQuiz = playerQuizService.findByPlayerAndCompleted(player).orElse(null);
+        Page<PlayerQuiz> playerQuiz = playerQuizService
+                .findByPlayerAndIscompleted(player, page, API_MAX_PAGE_SIZE_PLAYED_QUIZZES);
+        //.orElse(null);
         if (playerQuiz == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {

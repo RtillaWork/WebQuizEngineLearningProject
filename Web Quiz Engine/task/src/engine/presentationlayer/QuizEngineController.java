@@ -1,7 +1,9 @@
 package engine.presentationlayer;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import engine.businesslayer.PlayerQuiz;
 import engine.businesslayer.QuizGrader;
+import engine.persistencelayer.PlayerQuizService;
 import engine.persistencelayer.QuizService;
 import engine.businesslayer.Quiz;
 import engine.persistencelayer.UserEntityRepositoryService;
@@ -35,6 +37,9 @@ public class QuizEngineController {
 
     @Autowired
     private UserEntityRepositoryService uers;
+
+    @Autowired
+    private PlayerQuizService playerQuizService;
 
 //    private ConcurrentHashMap<Long, Quiz> quizMap = new ConcurrentHashMap<>();
 
@@ -70,14 +75,23 @@ public class QuizEngineController {
     public ResponseEntity<String> solveQuiz(@PathVariable @NotNull long id,
                                             @RequestBody(required = false) QuizAnswer quizAnswer,
                                             Principal principal) {
-        quizAnswer = (quizAnswer == null ? new QuizAnswer() : quizAnswer);
+
         Optional<Quiz> quiz = quizService.findById(id); // quizMap.get(id);
         if (quiz.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
+            quizAnswer = (quizAnswer == null ? new QuizAnswer() : quizAnswer);
+            UserEntity player = uers.findByUsername(principal.getName()).orElse(null);
+
+            PlayerQuiz playedQuiz = playerQuizService.save(quiz.get(), quizAnswer, player);
+
             return new ResponseEntity<String>(
-                    QuizGrader.feedback(quizAnswer, quiz.get()),
+                    playerQuizService.gradedResponse(playedQuiz),
                     HttpStatus.OK);
+
+//            return new ResponseEntity<String>(
+//                    QuizGrader.gradedResponse(quizAnswer, quiz.get(), player),
+//                    HttpStatus.OK);
         }
     }
 

@@ -1,9 +1,12 @@
 package engine.businesslayer;
 
 import engine.presentationlayer.QuizAnswer;
+import engine.security.UserEntity;
+import org.springframework.stereotype.Service;
 
 import java.util.Map;
 
+@Service
 public class QuizGrader {
 
     private static final String quizResponseJsonTemplate = "{\"success\":%s,\"feedback\":\"%s\"}";
@@ -13,7 +16,7 @@ public class QuizGrader {
             false, "Wrong answer! Please, try again."
     );
 
-    private static boolean gradeAnswer(QuizAnswer quizAnswer, Quiz quiz) {
+    public boolean gradeAnswer(Quiz quiz, QuizAnswer quizAnswer) {
         if (!quizAnswer.getAnswer().isEmpty() && !quiz.getAnswer().isEmpty()) {
             return quiz.getAnswer().equals(quizAnswer.getAnswer());
         } else if (quizAnswer.getAnswer().isEmpty() && quiz.getAnswer().isEmpty()) {
@@ -23,13 +26,35 @@ public class QuizGrader {
         }
     }
 
-    public static String feedback(QuizAnswer quizAnswer, Quiz quiz) {
-        boolean success = gradeAnswer(quizAnswer, quiz);
+    public String feedback(Quiz quiz, QuizAnswer quizAnswer) {
+        boolean success = gradeAnswer(quiz, quizAnswer);
         return String.format(quizResponseJsonTemplate, success, feedbackSuccess.get(success));
     }
 
-    public static String feedbackDebug(QuizAnswer quizAnswer, Quiz quiz) {
-        boolean success = gradeAnswer(quizAnswer, quiz);
+
+    public String gradedResponse(Quiz quiz, QuizAnswer quizAnswer, UserEntity player) {
+        boolean success = gradeAnswer(quiz, quizAnswer);
+//        QuizGrader.feedback(quizAnswer, quiz.get())
+//        OR
+        //        QuizGrader.gradedResponse(quizAnswer, quiz.get())
+
+//TODO
+        return String.format(quizResponseJsonTemplate, success, feedbackSuccess.get(success));
+    }
+
+    public String gradedResponse(PlayerQuiz playedQuiz) {
+
+        boolean success = gradeAnswer(playedQuiz.getQuiz(), new QuizAnswer(playedQuiz.getAnswer()));
+//        QuizGrader.feedback(quizAnswer, quiz.get())
+//        OR
+        //        QuizGrader.gradedResponse(quizAnswer, quiz.get())
+
+//TODO
+        return String.format(quizResponseJsonTemplate, success, feedbackSuccess.get(success));
+    }
+
+    public String feedbackDebug(Quiz quiz, QuizAnswer quizAnswer) {
+        boolean success = gradeAnswer(quiz, quizAnswer);
         return String.format(
                 " {success: %s, feedbackSuccess: %s, " +
                         "quizAnswer: %s, quiz: %s" +

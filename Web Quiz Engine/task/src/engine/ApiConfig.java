@@ -15,7 +15,6 @@ public class ApiConfig {
     public static final String API_GET_QUIZZES_WITH_PAGING = API_GET_QUIZZES; // GET all_quizzes?page=
     public static final String DEBUG_API_GET_QUIZZES_WITH_PAGING_WITH_TO_MAP = DEBUG_API_PREFIX + API_GET_QUIZZES; // GET all_quizzes?page=
 
-
     public static final String API_DELETE_QUIZ = API_QUIZZES_PATH + "/{id}"; // DELETE a user owned quiz only
 
     public static final String API_REGISTER_USER = API_ROOT_PATH + "/register"; // POST json
@@ -23,6 +22,10 @@ public class ApiConfig {
     public static final String API_SESSION_LOGOUT = API_ROOT_PATH + "/logout";
 
     public static final String API_QUIZZES_COMPLETED_WITH_PAGING = API_QUIZZES_PATH + "/completed"; // GET with paging
+    public static final String DEBUG_API_QUIZZES_PLAYED_ALL
+            = DEBUG_API_PREFIX + API_QUIZZES_PATH + "/completed"; // GET all without paging
 
     public static final int API_MAX_PAGE_SIZE_QUIZZES = 10;
+    public static final int API_MAX_PAGE_SIZE_PLAYED_QUIZZES = 10;
+
 }
