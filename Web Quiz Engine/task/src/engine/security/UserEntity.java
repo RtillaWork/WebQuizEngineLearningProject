@@ -188,4 +188,18 @@ public class UserEntity implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+
+    @Override
+    public String toString() {
+        return "UserEntity{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+//                ", roles='" + roles + '\'' +
+//                ", quizzes=" + quizzes +
+//                ", playerQuizzes=" + playerQuizzes +
+                '}';
+    }
 }

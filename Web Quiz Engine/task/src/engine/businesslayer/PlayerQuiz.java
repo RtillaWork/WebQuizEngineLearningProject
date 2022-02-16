@@ -19,12 +19,12 @@ public class PlayerQuiz {
     private Long id;
 
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne //(fetch = FetchType.EAGER)
     private UserEntity player;
 
     //    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne //(fetch = FetchType.EAGER)
     private Quiz playedQuiz;
 
     @JsonIgnore
@@ -145,5 +145,17 @@ public class PlayerQuiz {
 
     public boolean isCompleted() {
         return completed;
+    }
+
+    @Override
+    public String toString() {
+        return "PlayerQuiz{" +
+                "id=" + id +
+                ", player=" + player +
+                ", playedQuiz=" + playedQuiz +
+                ", answer=" + answer +
+                ", completed=" + completed +
+                ", lastAttemptedAt=" + lastAttemptedAt +
+                '}';
     }
 }

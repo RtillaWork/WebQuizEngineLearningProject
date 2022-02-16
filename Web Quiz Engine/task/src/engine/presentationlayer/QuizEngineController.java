@@ -84,11 +84,15 @@ public class QuizEngineController {
             quizAnswer = (quizAnswer == null ? new QuizAnswer() : quizAnswer);
             UserEntity player = uers.findByUsername(principal.getName()).orElse(null);
 
-            PlayerQuiz playedQuiz = playerQuizService.save(quiz.get(), quizAnswer, player);
+            PlayerQuiz playedQuiz = playerQuizService.saveIfSuccess(quiz.get(), quizAnswer, player);
 
-            return new ResponseEntity<String>(
-                    playerQuizService.gradedResponse(playedQuiz),
-                    HttpStatus.OK);
+            if (playedQuiz != null) {
+                return new ResponseEntity<String>(
+                        playerQuizService.gradedResponse(playedQuiz),
+                        HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.I_AM_A_TEAPOT);
+            }
 
 //            return new ResponseEntity<String>(
 //                    QuizGrader.gradedResponse(quizAnswer, quiz.get(), player),

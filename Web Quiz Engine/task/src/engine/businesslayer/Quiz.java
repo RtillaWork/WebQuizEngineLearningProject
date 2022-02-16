@@ -141,4 +141,17 @@ public class Quiz {
     public void setQuizPlayers(List<PlayerQuiz> quizPlayers) {
         this.quizPlayers = quizPlayers;
     }
+
+    @Override
+    public String toString() {
+        return "Quiz{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", text='" + text + '\'' +
+                ", options=" + Arrays.toString(options) +
+                ", answer=" + answer +
+//                ", quizAuthor=" + quizAuthor +
+//                ", quizPlayers=" + quizPlayers +
+                '}';
+    }
 }
